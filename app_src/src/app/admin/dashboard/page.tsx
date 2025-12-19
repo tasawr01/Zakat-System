@@ -9,8 +9,8 @@ interface Analytics {
     totalDonations: number;
     totalDonated: number;
     availableFunds?: number;
-    donationsByMonth: any[];
-    distributionByRegionAndStatus: any[];
+    donationsByMonth: { month: string; type: string; amount: number }[];
+    distributionByRegionAndStatus: { region: string; status: string; count: number; amount: number }[];
 }
 
 interface PendingDonation {

@@ -13,6 +13,7 @@ export async function GET() {
             totalDonors?: number;
             totalBeneficiaries?: number;
             totalDistributedCount?: number;
+            totalDistributedAmount?: number;
             activeCampaigns?: number;
             pendingApprovals?: number;
         }
