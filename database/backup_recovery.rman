@@ -1,0 +1,61 @@
+# ============================================================
+# RMAN BACKUP & RECOVERY STRATEGY
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. RMAN BACKUP SCRIPT (backup_script.rman)
+# ------------------------------------------------------------
+# Run this using: rman target / @backup_script.rman
+
+RUN {
+    # Allocate channels for parallel backup (adjust based on CPU)
+    ALLOCATE CHANNEL c1 DEVICE TYPE DISK;
+    ALLOCATE CHANNEL c2 DEVICE TYPE DISK;
+
+    # Backup the entire database including control file and SPFILE
+    BACKUP AS COMPRESSED BACKUPSET DATABASE PLUS ARCHIVELOG;
+
+    # Delete obsolete backups based on retention policy
+    DELETE NOPROMPT OBSOLETE;
+
+    # Release channels
+    RELEASE CHANNEL c1;
+    RELEASE CHANNEL c2;
+}
+
+# ------------------------------------------------------------
+# 2. RECOVERY STRATEGY
+# ------------------------------------------------------------
+
+# Scenario A: Complete Database Loss (Control file + Datafiles)
+# ------------------------------------------------------------
+# 1. Startup instance in NOMOUNT state
+#    RMAN> STARTUP NOMOUNT;
+# 2. Restore Control File
+#    RMAN> RESTORE CONTROLFILE FROM AUTOBACKUP;
+# 3. Mount Database
+#    RMAN> ALTER DATABASE MOUNT;
+# 4. Restore Database
+#    RMAN> RESTORE DATABASE;
+# 5. Recover Database
+#    RMAN> RECOVER DATABASE;
+# 6. Open Database with Resetlogs
+#    RMAN> ALTER DATABASE OPEN RESETLOGS;
+
+# Scenario B: Point-in-Time Recovery (Flashback)
+# ------------------------------------------------------------
+# If a user accidentally deleted a table at 10:00 AM:
+# 1. Mount Database
+#    RMAN> SHUTDOWN IMMEDIATE;
+#    RMAN> STARTUP MOUNT;
+# 2. Recover to time before error
+#    RMAN> RESTORE DATABASE UNTIL TIME "TO_DATE('2025-11-22 09:55:00', 'YYYY-MM-DD HH24:MI:SS')";
+#    RMAN> RECOVER DATABASE UNTIL TIME "TO_DATE('2025-11-22 09:55:00', 'YYYY-MM-DD HH24:MI:SS')";
+# 3. Open with Resetlogs
+#    RMAN> ALTER DATABASE OPEN RESETLOGS;
+
+# ------------------------------------------------------------
+# 3. FLASHBACK TABLE (Immediate Undo)
+# ------------------------------------------------------------
+# If Flashback is enabled and retention allows:
+# SQL> FLASHBACK TABLE DONATIONS TO TIMESTAMP (SYSTIMESTAMP - INTERVAL '15' MINUTE);
