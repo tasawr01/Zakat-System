@@ -28,13 +28,6 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // Demo credentials hint
-    const demoCredentials = {
-        admin: 'admin@example.com / admin123',
-        donor: 'donor@example.com / donor123',
-        beneficiary: 'beneficiary@example.com / beneficiary123'
-    };
-
     async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setError("");
@@ -100,7 +93,7 @@ export default function LoginPage() {
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"
-                                placeholder="admin@example.com"
+                                placeholder="email"
                                 type="email"
                                 autoCapitalize="none"
                                 autoComplete="email"
@@ -124,6 +117,7 @@ export default function LoginPage() {
                             <Input
                                 id="password"
                                 type="password"
+                                placeholder="password"
                                 autoComplete="current-password"
                                 disabled={isLoading}
                                 value={password}
@@ -143,14 +137,7 @@ export default function LoginPage() {
                         </Link>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-border">
-                        <p className="text-xs font-semibold text-muted-foreground mb-3 uppercase">Demo Credentials</p>
-                        <div className="space-y-2 text-xs text-muted-foreground">
-                            <p><span className="font-semibold text-primary">Admin:</span> {demoCredentials.admin}</p>
-                            <p><span className="font-semibold text-secondary">Donor:</span> {demoCredentials.donor}</p>
-                            <p><span className="font-semibold text-accent">Beneficiary:</span> {demoCredentials.beneficiary}</p>
-                        </div>
-                    </div>
+
                 </Card>
             </div>
         </motion.div>

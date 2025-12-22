@@ -41,13 +41,23 @@ interface User {
     createdAt: string;
 }
 
+interface LogEntry {
+    id: number;
+    tableName: string;
+    actionType: string;
+    recordId: number;
+    timestamp: string;
+    details: string;
+}
+
 export default function AdminDashboard() {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<'overview' | 'users'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'logs'>('overview');
     const [analytics, setAnalytics] = useState<Analytics | null>(null);
     const [pendingDonations, setPendingDonations] = useState<PendingDonation[]>([]);
     const [pendingBeneficiaries, setPendingBeneficiaries] = useState<PendingBeneficiary[]>([]);
     const [users, setUsers] = useState<User[]>([]);
+    const [logs, setLogs] = useState<LogEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [processingId, setProcessingId] = useState<number | null>(null);
@@ -71,10 +81,11 @@ export default function AdminDashboard() {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const [analyticsRes, pendingRes, usersRes] = await Promise.all([
+            const [analyticsRes, pendingRes, usersRes, logsRes] = await Promise.all([
                 fetch('/api/admin/analytics'),
                 fetch('/api/admin/pending'),
-                fetch('/api/admin/users')
+                fetch('/api/admin/users'),
+                fetch('/api/admin/logs')
             ]);
 
             if (analyticsRes.ok) {
@@ -91,6 +102,11 @@ export default function AdminDashboard() {
             if (usersRes.ok) {
                 const data = await usersRes.json();
                 setUsers(data.users || []);
+            }
+
+            if (logsRes.ok) {
+                const data = await logsRes.json();
+                setLogs(data.logs || []);
             }
         } catch (err) {
             setError('Failed to load data');
@@ -190,6 +206,14 @@ export default function AdminDashboard() {
                                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
                             >
                                 User Management
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('logs')}
+                                className={`px-4 py-2 rounded-lg transition-colors ${activeTab === 'logs'
+                                    ? 'bg-emerald-500/20 text-emerald-300'
+                                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+                            >
+                                System Logs
                             </button>
                         </nav>
                     </div>
@@ -371,7 +395,7 @@ export default function AdminDashboard() {
                             )}
                         </motion.div>
                     </>
-                ) : (
+                ) : activeTab === 'users' ? (
                     // Users Management Tab
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                         <h2 className="text-xl font-bold text-blue-300 mb-6">User Management</h2>
@@ -418,6 +442,49 @@ export default function AdminDashboard() {
                                             <tr>
                                                 <td colSpan={5} className="p-8 text-center text-slate-400">
                                                     No users found
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Card>
+                    </motion.div>
+                ) : (
+                    // Logs Tab
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+                        <h2 className="text-xl font-bold text-slate-300 mb-6">System Logs</h2>
+                        <Card className="bg-slate-800/50 border-slate-500/30 overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead className="bg-slate-900/50">
+                                        <tr>
+                                            <th className="p-4 text-slate-400 font-medium">Timestamp</th>
+                                            <th className="p-4 text-slate-400 font-medium">Table</th>
+                                            <th className="p-4 text-slate-400 font-medium">Action</th>
+                                            <th className="p-4 text-slate-400 font-medium">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-700/50">
+                                        {logs.map((log) => (
+                                            <tr key={log.id} className="hover:bg-slate-700/30 transition-colors">
+                                                <td className="p-4 text-slate-400 text-sm whitespace-nowrap">{log.timestamp}</td>
+                                                <td className="p-4 text-slate-300 font-mono text-xs">{log.tableName}</td>
+                                                <td className="p-4">
+                                                    <span className={`px-2 py-1 rounded text-xs font-bold ${log.actionType === 'INSERT' ? 'text-emerald-400 bg-emerald-500/10' :
+                                                        log.actionType === 'UPDATE' ? 'text-amber-400 bg-amber-500/10' :
+                                                            'text-red-400 bg-red-500/10'
+                                                        }`}>
+                                                        {log.actionType}
+                                                    </span>
+                                                </td>
+                                                <td className="p-4 text-slate-300 text-sm">{log.details}</td>
+                                            </tr>
+                                        ))}
+                                        {logs.length === 0 && (
+                                            <tr>
+                                                <td colSpan={4} className="p-8 text-center text-slate-400">
+                                                    No system logs found
                                                 </td>
                                             </tr>
                                         )}

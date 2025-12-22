@@ -1,0 +1,30 @@
+Connected to database
+
+--- 1. Vertical Fragmentation (Users) ---
+Tables found: [ 'USERS_PUBLIC', 'USERS_SECURE' ]
+Views found: USERS
+
+--- 2. Range Partitioning (Donations) ---
+Partitions found for DONATIONS: 4
+- P_2023
+- P_2024
+- P_2025
+- P_FUTURE
+
+--- 3. Beneficiaries Structure ---
+Columns: [
+  'BENEFICIARY_ID',
+  'USER_ID',
+  'REGION',
+  'INCOME_LEVEL',
+  'FAMILY_MEMBERS',
+  'ELIGIBILITY_STATUS',
+  'DOCUMENTS',
+  'DOCUMENT_MIME_TYPE',
+  'CREATED_AT',
+  'REQUESTED_AMOUNT'
+]
+No physical fragment tables (BENEFICIARIES_*) found.
+
+--- 4. Indexes ---
+Indexes found: [ 'IDX_BENEFICIARIES_REGION', 'IDX_DONATIONS_DONOR' ]
