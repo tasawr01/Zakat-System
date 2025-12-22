@@ -26,8 +26,8 @@ export class BeneficiaryRepository {
         return result.rowsAffected && result.rowsAffected > 0;
     }
 
-    // Add missing method if usage moved to Service directly but should stay here
-    // In step 555, I put INSERT in Service. I should probably move it here for consistency, 
-    // but for this task I will just update wherever it is.
-    // Let's check Service content.
+    
+    
+    
+    
 }

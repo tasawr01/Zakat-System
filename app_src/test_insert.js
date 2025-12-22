@@ -14,7 +14,7 @@ async function run() {
         const user = 'test_simple_' + Date.now();
         const email = user + '@example.com';
 
-        // Simple insert without returning
+        
         await connection.execute(
             `INSERT INTO USERS_PUBLIC (USERNAME, EMAIL, ROLE) VALUES (:1, :2, 'DONOR')`,
             [user, email],

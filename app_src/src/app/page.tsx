@@ -37,7 +37,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col">
       <Navbar />
 
-      {/* Hero Section */}
+      {}
       <section className="relative pt-20 pb-32 overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
 
@@ -75,7 +75,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {}
       <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -140,7 +140,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {}
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">

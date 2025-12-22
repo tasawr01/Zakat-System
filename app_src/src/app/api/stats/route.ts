@@ -13,7 +13,7 @@ export async function GET() {
             totalDonations: data.totalDonations || 0,
             beneficiariesHelped: data.beneficiariesHelped || 0,
             partnerNGOs: data.partnerNGOs || 50,
-            successRate: 99.9 // Hardcoded for now as it's a calculated metric
+            successRate: 99.9 
         });
     } catch (error) {
         console.error('Stats API Error:', error);

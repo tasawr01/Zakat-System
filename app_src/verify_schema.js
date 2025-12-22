@@ -23,7 +23,7 @@ async function run() {
 
         console.log('Connected to database\n');
 
-        // 1. Verify Vertical Fragmentation (Users)
+        
         console.log('--- 1. Vertical Fragmentation (Users) ---');
         const userTables = await connection.execute(
             `SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME IN ('USERS_PUBLIC', 'USERS_SECURE')`
@@ -35,7 +35,7 @@ async function run() {
         );
         console.log('Views found:', userViews.rows.length > 0 ? 'USERS' : 'None');
 
-        // 2. Verify Range Partitioning (Donations)
+        
         console.log('\n--- 2. Range Partitioning (Donations) ---');
         const partitions = await connection.execute(
             `SELECT PARTITION_NAME 
@@ -54,7 +54,7 @@ async function run() {
             console.log('No partitions found for DONATIONS.');
         }
 
-        // 3. Verify Beneficiaries (Horizontal Fragmentation Logic)
+        
         console.log('\n--- 3. Beneficiaries Structure ---');
         const benTable = await connection.execute(
             `SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = 'BENEFICIARIES'`
@@ -62,7 +62,7 @@ async function run() {
         const benCols = benTable.rows.flat();
         console.log('Columns:', benCols);
 
-        // Check if there are other fragment tables
+        
         const fragTables = await connection.execute(
             `SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME LIKE 'BENEFICIARIES_%'`
         );
@@ -72,7 +72,7 @@ async function run() {
             console.log('No physical fragment tables (BENEFICIARIES_*) found.');
         }
 
-        // 4. Indexes
+        
         console.log('\n--- 4. Indexes ---');
         const indexes = await connection.execute(
             `SELECT INDEX_NAME FROM USER_INDEXES 

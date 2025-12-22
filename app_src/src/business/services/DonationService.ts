@@ -1,7 +1,7 @@
 import { DonationRepository } from '../../database/repositories/DonationRepository';
-import { query } from '../../database/connection'; // Direct query for stats if needed, or better, move to specific StatsRepo
+import { query } from '../../database/connection'; 
 
-// For simplicity, we can reuse DonationRepo or create StatsRepo
+
 const donationRepo = new DonationRepository();
 
 export class DonationService {
@@ -10,7 +10,7 @@ export class DonationService {
     }
 
     async createDonation(donorId: number, amount: number, type: string) {
-        // Business logic: check limits?
+        
         return await donationRepo.createDonation(donorId, amount, type);
     }
 

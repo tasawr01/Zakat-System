@@ -25,7 +25,7 @@ export class AdminService {
         if (status === 'APPROVED') {
             const { query } = require('../../database/connection');
 
-            // 1. Get Beneficiary Amount
+            
             const beneficiaryResult = await query(
                 `SELECT REQUESTED_AMOUNT FROM BENEFICIARIES WHERE BENEFICIARY_ID = :1`,
                 [id]
@@ -33,11 +33,11 @@ export class AdminService {
             const requestedAmount = beneficiaryResult[0]?.REQUESTED_AMOUNT || 0;
 
             if (requestedAmount > 0) {
-                // 2. Check Available Funds
+                
                 const stats = await this.getAnalytics();
                 const totalDonated = (stats.summary as any).totalDonations || 0;
 
-                // Calculate already distributed
+                
                 const distributedResult = await query(
                     `SELECT SUM(REQUESTED_AMOUNT) as "distributed" FROM BENEFICIARIES WHERE ELIGIBILITY_STATUS = 'APPROVED'`
                 );
@@ -54,17 +54,17 @@ export class AdminService {
     }
 
     async getAnalytics() {
-        // This functionality was previously checking directly via query in api/admin/analytics
-        // We can move it here or to a repo. For minimal changes, let's keep it here using new connection helpers 
-        // OR better, instantiate repos to get data. But DonationRepo doesn't have all methods yet (grouped by month etc).
-        // Let's delegate to Repositories to add these methods.
+        
+        
+        
+        
 
-        // However, for speed in this turn, I will import query here in service 
-        // to migrate the logic from route.ts, then later refactor to strict Repo methods.
-        // Actually, let's just use the logic from route.ts here.
-        const { query } = require('../../database/connection'); // Dynamic import to avoid cycles or strict separation issues if any
+        
+        
+        
+        const { query } = require('../../database/connection'); 
 
-        // 1. Donations by Month and Type
+        
         const donationsByMonth = await query(
             `SELECT 
                 TO_CHAR(DONATION_DATE, 'YYYY-MM') as "month",
@@ -75,7 +75,7 @@ export class AdminService {
              ORDER BY "month" DESC`
         );
 
-        // 2. Distribution by Region and Status
+        
         const distributionByRegion = await query(
             `SELECT 
                 REGION as "region",
@@ -87,7 +87,7 @@ export class AdminService {
              ORDER BY REGION`
         );
 
-        // 3. Summary Stats (Reusing logic from DonationService/Repo could be better but sticking to route logic)
+        
         const summaryStats = await query(
             `SELECT 
                 (SELECT NVL(SUM(AMOUNT), 0) FROM DONATIONS WHERE STATUS = 'APPROVED') as "totalDonations",

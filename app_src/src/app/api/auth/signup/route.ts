@@ -23,7 +23,7 @@ export async function POST(request: Request) {
             );
         }
 
-        // Create user in Oracle DB
+        
         const newUser = await userService.createUser(username, email, password, role);
 
         const token = createToken(newUser as any);

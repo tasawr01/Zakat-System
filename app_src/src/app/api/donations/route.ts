@@ -10,7 +10,7 @@ export async function GET(request: Request) {
 
         let donations = await donationService.getDonationsByDonor(donorId ? parseInt(donorId) : undefined);
 
-        // Map database columns (uppercase) to frontend properties (lowercase)
+        
         donations = donations.map((d: any) => ({
             id: d.DONATION_ID,
             amount: d.AMOUNT,

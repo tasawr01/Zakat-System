@@ -154,7 +154,7 @@ export default function AdminDashboard() {
             });
 
             if (res.ok) {
-                await fetchData(); // Refresh list
+                await fetchData(); 
             } else {
                 setError('Failed to delete user');
             }
@@ -185,7 +185,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-            {/* Header */}
+            {}
             <div className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur border-b border-emerald-500/20">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-8">
@@ -240,7 +240,7 @@ export default function AdminDashboard() {
 
                 {activeTab === 'overview' ? (
                     <>
-                        {/* Analytics Section */}
+                        {}
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                             <h2 className="text-xl font-bold text-emerald-300 mb-6">Analytics Overview</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -274,7 +274,7 @@ export default function AdminDashboard() {
                             </div>
                         </motion.div>
 
-                        {/* Pending Donations Section */}
+                        {}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -329,7 +329,7 @@ export default function AdminDashboard() {
                             )}
                         </motion.div>
 
-                        {/* Pending Beneficiaries Section */}
+                        {}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
                         </motion.div>
                     </>
                 ) : activeTab === 'users' ? (
-                    // Users Management Tab
+                    
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                         <h2 className="text-xl font-bold text-blue-300 mb-6">User Management</h2>
                         <Card className="bg-slate-800/50 border-blue-500/30 overflow-hidden">
@@ -451,7 +451,7 @@ export default function AdminDashboard() {
                         </Card>
                     </motion.div>
                 ) : (
-                    // Logs Tab
+                    
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                         <h2 className="text-xl font-bold text-slate-300 mb-6">System Logs</h2>
                         <Card className="bg-slate-800/50 border-slate-500/30 overflow-hidden">

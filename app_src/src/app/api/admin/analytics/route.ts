@@ -5,10 +5,10 @@ const adminService = new AdminService();
 
 export async function GET() {
     try {
-        // Fetch analytics from service
+        
         const { donationsByMonth, distributionByRegion, summary } = await adminService.getAnalytics();
 
-        // Define a robust type for summary stats
+        
         interface SummaryStats {
             totalDonations?: number;
             totalDonationsCount?: number;
@@ -22,7 +22,7 @@ export async function GET() {
 
         const summaryData: SummaryStats = summary ?? {};
 
-        // Build analytics object with safe defaults
+        
         const analyticsData = {
             totalDonations: summaryData.totalDonationsCount ?? 0,
             totalDonated: summaryData.totalDonations ?? 0,

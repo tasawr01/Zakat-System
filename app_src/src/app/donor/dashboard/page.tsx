@@ -18,7 +18,7 @@ export default function DonorDashboard() {
     const [donationSubmitting, setDonationSubmitting] = useState(false);
 
     useEffect(() => {
-        // Check authentication
+        
         const userStr = localStorage.getItem('user');
         if (!userStr) {
             router.push('/login');
@@ -33,7 +33,7 @@ export default function DonorDashboard() {
 
         setUser(userData);
 
-        // Fetch donations
+        
         fetch(`/api/donations?donorId=${userData.id}`)
             .then(res => res.json())
             .then(data => {
@@ -48,16 +48,16 @@ export default function DonorDashboard() {
 
     const calculateZakat = async () => {
         try {
-            // Zakat calculation logic
-            const goldValue = assets.gold * 6000; // Approximate PKR per gram
-            const silverValue = assets.silver * 80; // Approximate PKR per gram
+            
+            const goldValue = assets.gold * 6000; 
+            const silverValue = assets.silver * 80; 
             const totalValue = goldValue + silverValue + assets.cash;
 
-            // Nisab: approximately 85 grams of gold or 595 grams of silver
+            
             const nisab = Math.min(85 * 6000, 595 * 80);
 
             if (totalValue >= nisab) {
-                const zakat = totalValue * 0.025; // 2.5%
+                const zakat = totalValue * 0.025; 
                 setZakatResult({
                     totalZakat: zakat,
                     details: [
@@ -95,7 +95,7 @@ export default function DonorDashboard() {
             });
 
             if (response.ok) {
-                // Refresh donations list
+                
                 const donationsRes = await fetch(`/api/donations?donorId=${user.id}`);
                 const donationsData = await donationsRes.json();
                 setDonations(donationsData.donations || []);
@@ -143,7 +143,7 @@ export default function DonorDashboard() {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                    {/* Zakat Calculator */}
+                    {}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                         <Card className="bg-card border border-border p-6">
                             <h2 className="text-xl font-semibold mb-6 text-primary">Zakat Calculator</h2>
@@ -212,7 +212,7 @@ export default function DonorDashboard() {
                         </Card>
                     </motion.div>
 
-                    {/* Donation History */}
+                    {}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                         <Card className="bg-card border border-border p-6">
                             <h2 className="text-xl font-semibold mb-6 text-secondary">Donation History</h2>

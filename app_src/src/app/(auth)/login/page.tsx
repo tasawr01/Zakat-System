@@ -48,11 +48,11 @@ export default function LoginPage() {
                 return;
             }
 
-            // Store token in localStorage
+            
             localStorage.setItem("auth-token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            // Redirect based on role
+            
             const roleRoutes = {
                 'ADMIN': '/admin/dashboard',
                 'DONOR': '/donor/dashboard',

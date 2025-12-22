@@ -22,7 +22,7 @@ export async function DELETE(request: Request) {
         }
 
         const success = await userService.deleteUser(parseInt(id));
-        // Map boolean success to object expected by existing logic
+        
         const result = { success, error: success ? undefined : 'Failed to delete user' };
 
         if (result.success) {

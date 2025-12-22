@@ -33,12 +33,12 @@ export async function POST(request: Request) {
             token,
         });
 
-        // Set httpOnly cookie for security
+        
         response.cookies.set('auth-token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 60 * 60 * 24, // 24 hours
+            maxAge: 60 * 60 * 24, 
         });
 
         return response;

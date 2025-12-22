@@ -51,11 +51,11 @@ export default function SignupPage() {
                 return;
             }
 
-            // Store token in localStorage
+            
             localStorage.setItem("auth-token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            // Redirect based on role
+            
             const roleRoutes = {
                 'DONOR': '/donor/dashboard',
                 'BENEFICIARY': '/beneficiary/apply'

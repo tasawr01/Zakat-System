@@ -17,30 +17,30 @@ async function run() {
         const sqlPath = path.join(__dirname, '../database/system_logs.sql');
         const sqlContent = fs.readFileSync(sqlPath, 'utf8');
 
-        // Split by '/' which handles the PL/SQL blocks and separates them from the table creation
-        // The table creation is at the top. We need to be careful.
-        // My file format:
-        // CREATE TABLE ...;
-        //
-        // -- 2. Triggers
-        //
-        // CREATE ... TRIGGER ... END;
-        // /
-        // ...
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
-        // Strategy: Split by '/' first to separate triggers. 
-        // The first chunk will contain the CREATE TABLE statement (ending in ;) and the first Trigger body.
-        // Wait, standard SQL clients splits by / on a new line.
+        
+        
+        
 
-        // Let's rely on a simpler regex to find the statements. 
-        // Actually, since I control the file, I know:
-        // 1. "CREATE TABLE SYSTEM_LOGS ... );" 
-        // 2. "CREATE OR REPLACE TRIGGER TRG_LOG_USERS ... END;"
-        // 3. "CREATE OR REPLACE TRIGGER TRG_LOG_DONATIONS ... END;"
-        // 4. "CREATE OR REPLACE TRIGGER TRG_LOG_BENEFICIARIES ... END;"
+        
+        
+        
+        
+        
+        
 
-        // Let's hardcode the executions to be safe, reading the file is good but parsing is error-prone.
-        // I'll just execute the known statements for reliability.
+        
+        
 
         console.log('Creating SYSTEM_LOGS table...');
         try {

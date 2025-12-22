@@ -17,7 +17,7 @@ export default function BeneficiaryApply() {
     const [showForm, setShowForm] = useState(true);
 
     useEffect(() => {
-        // Check authentication
+        
         const userStr = localStorage.getItem('user');
         if (!userStr) {
             router.push('/login');
@@ -32,7 +32,7 @@ export default function BeneficiaryApply() {
 
         setUser(userData);
 
-        // Fetch beneficiaries list
+        
         fetch('/api/beneficiaries')
             .then(res => res.json())
             .then(data => setBeneficiaries(data.beneficiaries || []))
@@ -56,10 +56,10 @@ export default function BeneficiaryApply() {
 
             if (res.ok) {
                 setStatus('Application submitted successfully for admin review!');
-                // Reset form fields
+                
                 (e.target as HTMLFormElement).reset();
 
-                // Refresh list
+                
                 const listRes = await fetch(`/api/beneficiaries?userId=${user.id}`);
                 const listData = await listRes.json();
                 setBeneficiaries(listData.beneficiaries || []);
@@ -104,7 +104,7 @@ export default function BeneficiaryApply() {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                    {/* Application Form */}
+                    {}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                         <Card className="bg-card border border-border p-8">
                             <h2 className="text-2xl font-bold mb-6 text-primary">Submit Your Application</h2>
@@ -157,7 +157,7 @@ export default function BeneficiaryApply() {
                         </Card>
                     </motion.div>
 
-                    {/* Applications List */}
+                    {}
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                         <Card className="bg-card border border-border p-8">
                             <h2 className="text-2xl font-bold mb-6 text-secondary">Recent Applications</h2>

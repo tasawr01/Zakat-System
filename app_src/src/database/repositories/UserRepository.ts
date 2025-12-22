@@ -68,7 +68,7 @@ export class UserRepository {
     }
 
     async deleteUser(userId: number) {
-        // Cascade delete manually
+        
         await execute(`DELETE FROM USERS_SECURE WHERE USER_ID = :1`, [userId]);
         await execute(`DELETE FROM DONATIONS WHERE DONOR_ID = :1`, [userId]);
         await execute(`DELETE FROM BENEFICIARIES WHERE USER_ID = :1`, [userId]);
